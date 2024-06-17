@@ -1,0 +1,30 @@
+﻿<h3>PersonInfo</h3>
+
+<EditForm Model="_person" OnValidSubmit="ValidSubmission">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <InputText @bind-Value="_person.FirstName" placeholder="First Name" class="form-control"></InputText>
+    <InputText @bind-Value="_person.LastName" placeholder="Last Name" class="form-control"></InputText>
+    <InputCheckbox id="alive" @bind-Value="_person.IsActive"></InputCheckbox>
+    <label for="alive">alive?</label>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+<ul>
+    @foreach (var p in _peopleList)
+    {
+        <li>@p.FirstName @p.LastName are they alive?: @p.IsActive</li>
+    }
+</ul>
+
+@code {
+    private PersonModel _person = new();
+    private List<PersonModel> _peopleList = new();
+
+    private void ValidSubmission()
+    {
+        _peopleList.Add(_person);
+        _person = new();
+    }
+}
